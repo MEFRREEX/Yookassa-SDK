@@ -1,22 +1,22 @@
 package com.mefrreex.yookassa.impl.model.confirmation;
 
-import com.google.gson.annotations.SerializedName;
 import com.mefrreex.yookassa.api.model.confirmation.ConfirmationRedirect;
 import com.mefrreex.yookassa.api.model.confirmation.ConfirmationType;
-import org.jetbrains.annotations.NotNull;
+import com.mefrreex.yookassa.utils.gson.annotation.Implementation;
 import org.jetbrains.annotations.Nullable;
 
+@Implementation(ConfirmationRedirect.class)
 public class ConfirmationRedirectImpl extends ConfirmationImpl implements ConfirmationRedirect {
 
     private final Boolean enforce;
-
-    @SerializedName("return_url")
     private final String returnUrl;
+    private final String confirmationUrl;
 
-    public ConfirmationRedirectImpl(String locale, Boolean enforce, String returnUrl) {
+    public ConfirmationRedirectImpl(String locale, @Nullable Boolean enforce, @Nullable String returnUrl, @Nullable String confirmationUrl) {
         super(ConfirmationType.REDIRECT, locale);
         this.enforce = enforce;
         this.returnUrl = returnUrl;
+        this.confirmationUrl = confirmationUrl;
     }
 
     @Override
@@ -25,7 +25,12 @@ public class ConfirmationRedirectImpl extends ConfirmationImpl implements Confir
     }
 
     @Override
-    public @NotNull String getReturnUrl() {
+    public @Nullable String getReturnUrl() {
         return returnUrl;
+    }
+
+    @Override
+    public @Nullable String getConfirmationUrl() {
+        return confirmationUrl;
     }
 }

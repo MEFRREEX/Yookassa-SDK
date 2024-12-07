@@ -1,22 +1,27 @@
 package com.mefrreex.yookassa.impl.model.confirmation;
 
-import com.google.gson.annotations.SerializedName;
 import com.mefrreex.yookassa.api.model.confirmation.ConfirmationMobileApplication;
 import com.mefrreex.yookassa.api.model.confirmation.ConfirmationType;
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class ConfirmationMobileApplicationImpl extends ConfirmationImpl implements ConfirmationMobileApplication {
 
-    @SerializedName("return_url")
     private final String returnUrl;
+    private final String confirmationUrl;
 
-    public ConfirmationMobileApplicationImpl(String locale, @NotNull String returnUrl) {
+    public ConfirmationMobileApplicationImpl(String locale, @Nullable String returnUrl, @Nullable String confirmationUrl) {
         super(ConfirmationType.MOBILE_APPLICATION, locale);
         this.returnUrl = returnUrl;
+        this.confirmationUrl = confirmationUrl;
     }
 
     @Override
-    public @NotNull String getReturnUrl() {
+    public @Nullable String getReturnUrl() {
         return returnUrl;
+    }
+
+    @Override
+    public @Nullable String getConfirmationUrl() {
+        return confirmationUrl;
     }
 }
