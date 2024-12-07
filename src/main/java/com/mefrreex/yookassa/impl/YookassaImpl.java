@@ -2,7 +2,9 @@ package com.mefrreex.yookassa.impl;
 
 import com.mefrreex.yookassa.api.Yookassa;
 import com.mefrreex.yookassa.api.model.payment.CreatePaymentRequest;
+import com.mefrreex.yookassa.api.model.payment.GetPaymentsRequest;
 import com.mefrreex.yookassa.api.model.payment.Payment;
+import com.mefrreex.yookassa.api.model.payment.PaymentList;
 import com.mefrreex.yookassa.exception.YookassaRequestException;
 import com.mefrreex.yookassa.utils.HttpMethod;
 import com.mefrreex.yookassa.utils.gson.GsonUtil;
@@ -36,6 +38,11 @@ public class YookassaImpl implements Yookassa {
     @Override
     public Payment createPayment(CreatePaymentRequest request) {
         return this.sendRequest(Payment.class, "https://api.yookassa.ru/v3/payments", HttpMethod.POST, GsonUtil.toJson(request));
+    }
+
+    @Override
+    public PaymentList getPayments(GetPaymentsRequest request) {
+        return this.sendRequest(PaymentList.class, "https://api.yookassa.ru/v3/payments", HttpMethod.GET, GsonUtil.toJson(request));
     }
 
     private <T> T sendRequest(Class<T> responseType, String endpoint, HttpMethod method, String body) {
