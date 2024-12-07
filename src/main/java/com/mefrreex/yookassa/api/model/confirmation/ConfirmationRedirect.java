@@ -1,8 +1,10 @@
 package com.mefrreex.yookassa.api.model.confirmation;
 
 import com.mefrreex.yookassa.impl.model.confirmation.ConfirmationRedirectImpl;
+import com.mefrreex.yookassa.utils.gson.annotation.Implementation;
 import org.jetbrains.annotations.Nullable;
 
+@Implementation(ConfirmationRedirectImpl.class)
 public interface ConfirmationRedirect extends Confirmation {
     @Nullable String getReturnUrl();
 
