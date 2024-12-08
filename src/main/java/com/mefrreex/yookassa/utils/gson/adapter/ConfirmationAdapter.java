@@ -12,15 +12,14 @@ public class ConfirmationAdapter implements JsonDeserializer<Confirmation> {
     @Override
     public Confirmation deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         JsonObject jsonObject = json.getAsJsonObject();
-        String confirmationType = jsonObject.get("type").getAsString();
+        ConfirmationType confirmationType = ConfirmationType.getByName(jsonObject.get("type").getAsString());
 
         return switch (confirmationType) {
-            case ConfirmationType.EMBEDDED -> context.deserialize(json, ConfirmationEmbeddedImpl.class);
-            case ConfirmationType.EXTERNAL -> context.deserialize(json, ConfirmationExternalImpl.class);
-            case ConfirmationType.MOBILE_APPLICATION -> context.deserialize(json, ConfirmationMobileApplicationImpl.class);
-            case ConfirmationType.QR -> context.deserialize(json, ConfirmationQrImpl.class);
-            case ConfirmationType.REDIRECT -> context.deserialize(json, ConfirmationRedirectImpl.class);
-            default -> context.deserialize(json, ConfirmationImpl.class);
+            case EMBEDDED -> context.deserialize(json, ConfirmationEmbeddedImpl.class);
+            case EXTERNAL -> context.deserialize(json, ConfirmationExternalImpl.class);
+            case MOBILE_APPLICATION -> context.deserialize(json, ConfirmationMobileApplicationImpl.class);
+            case QR -> context.deserialize(json, ConfirmationQrImpl.class);
+            case REDIRECT -> context.deserialize(json, ConfirmationRedirectImpl.class);
         };
     }
 }

@@ -1,5 +1,6 @@
 package com.mefrreex.yookassa.impl.model.confirmation;
 
+import com.mefrreex.yookassa.api.model.Locale;
 import com.mefrreex.yookassa.api.model.confirmation.ConfirmationEmbedded;
 import com.mefrreex.yookassa.api.model.confirmation.ConfirmationType;
 import org.jetbrains.annotations.Nullable;
@@ -8,7 +9,7 @@ public class ConfirmationEmbeddedImpl extends ConfirmationImpl implements Confir
 
     private final String confirmationToken;
 
-    public ConfirmationEmbeddedImpl(String locale, @Nullable String confirmationToken) {
+    public ConfirmationEmbeddedImpl(@Nullable Locale locale, @Nullable String confirmationToken) {
         super(ConfirmationType.EMBEDDED, locale);
         this.confirmationToken = confirmationToken;
     }

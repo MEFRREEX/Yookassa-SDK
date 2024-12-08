@@ -1,15 +1,16 @@
 package com.mefrreex.yookassa.impl.model;
 
 import com.mefrreex.yookassa.api.model.Amount;
+import com.mefrreex.yookassa.api.model.Currency;
 
 import java.math.BigDecimal;
 
 public class AmountImpl implements Amount {
 
     private final BigDecimal value;
-    private final String currency;
+    private final Currency currency;
 
-    public AmountImpl(BigDecimal value, String currency) {
+    public AmountImpl(BigDecimal value, Currency currency) {
         this.value = value;
         this.currency = currency;
     }
@@ -20,7 +21,7 @@ public class AmountImpl implements Amount {
     }
 
     @Override
-    public String getCurrency() {
+    public Currency getCurrency() {
         return currency;
     }
 }

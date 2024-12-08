@@ -1,5 +1,6 @@
 package com.mefrreex.yookassa.impl.model.confirmation;
 
+import com.mefrreex.yookassa.api.model.Locale;
 import com.mefrreex.yookassa.api.model.confirmation.ConfirmationMobileApplication;
 import com.mefrreex.yookassa.api.model.confirmation.ConfirmationType;
 import org.jetbrains.annotations.Nullable;
@@ -9,7 +10,7 @@ public class ConfirmationMobileApplicationImpl extends ConfirmationImpl implemen
     private final String returnUrl;
     private final String confirmationUrl;
 
-    public ConfirmationMobileApplicationImpl(String locale, @Nullable String returnUrl, @Nullable String confirmationUrl) {
+    public ConfirmationMobileApplicationImpl(@Nullable Locale locale, @Nullable String returnUrl, @Nullable String confirmationUrl) {
         super(ConfirmationType.MOBILE_APPLICATION, locale);
         this.returnUrl = returnUrl;
         this.confirmationUrl = confirmationUrl;

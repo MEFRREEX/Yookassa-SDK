@@ -9,9 +9,9 @@ import java.math.BigDecimal;
 public interface Amount {
     BigDecimal getValue();
 
-    String getCurrency();
+    Currency getCurrency();
 
-    static Amount of(BigDecimal value, String currency) {
+    static Amount of(BigDecimal value, Currency currency) {
         return new AmountImpl(value, currency);
     }
 }
