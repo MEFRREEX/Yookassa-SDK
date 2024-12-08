@@ -3,7 +3,7 @@ package com.mefrreex.yookassa.exception;
 import lombok.Getter;
 
 @Getter
-public class YookassaApiException extends RuntimeException {
+public class YookassaApiException extends YookassaClientException {
     private final String type;
     private final String id;
     private final String code;
