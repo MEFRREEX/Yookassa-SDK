@@ -4,14 +4,12 @@ import com.google.gson.JsonElement;
 import com.mefrreex.yookassa.api.model.Amount;
 import com.mefrreex.yookassa.api.model.confirmation.Confirmation;
 import com.mefrreex.yookassa.api.model.payment.*;
-import lombok.ToString;
 import org.jetbrains.annotations.Nullable;
 import lombok.Builder;
 
 import java.util.Set;
 
 @Builder
-@ToString
 public class PaymentImpl implements Payment {
 
     private final String id;

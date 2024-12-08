@@ -3,8 +3,10 @@ package com.mefrreex.yookassa.api.model.payment;
 import com.mefrreex.yookassa.api.model.Amount;
 import com.mefrreex.yookassa.api.model.confirmation.Confirmation;
 import com.mefrreex.yookassa.impl.model.payment.CreatePaymentRequestImpl;
+import com.mefrreex.yookassa.utils.gson.annotation.Implementation;
 import org.jetbrains.annotations.Nullable;
 
+@Implementation(CreatePaymentRequestImpl.class)
 public interface CreatePaymentRequest {
     Amount getAmount();
 
