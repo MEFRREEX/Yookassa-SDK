@@ -47,13 +47,14 @@ public interface Payment {
 
     @Nullable PaymentAuthorizationDetails getAuthorizationDetails();
 
+    @Nullable PaymentInvoiceDetails getInvoiceDetails();
+
+
     @Nullable Set<PaymentTransfer> getTransfers();
 
     @Nullable Object getDeal();  // TODO make payment deal class
 
     @Nullable String getMerchantCustomerId();
-
-    @Nullable Object getInvoiceDetails(); // TODO make invoice details class
 
     static Payment create(
         String id,
@@ -74,10 +75,10 @@ public interface Payment {
         @Nullable JsonElement metadata,
         @Nullable PaymentCancellationDetails cancellationDetails,
         @Nullable PaymentAuthorizationDetails authorizationDetails,
+        @Nullable PaymentInvoiceDetails invoiceDetails,
         @Nullable Set<PaymentTransfer> transfers,
         @Nullable Object deal,
-        @Nullable String merchantCustomerId,
-        @Nullable Object invoiceDetails
+        @Nullable String merchantCustomerId
     ) {
         return new PaymentImpl(
             id,
@@ -98,10 +99,10 @@ public interface Payment {
             metadata,
             cancellationDetails,
             authorizationDetails,
+            invoiceDetails,
             transfers,
             deal,
-            merchantCustomerId,
-            invoiceDetails
+            merchantCustomerId
         );
     }
 

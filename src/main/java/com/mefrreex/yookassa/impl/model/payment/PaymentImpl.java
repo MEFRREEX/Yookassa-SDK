@@ -30,10 +30,10 @@ public class PaymentImpl implements Payment {
     private final JsonElement metadata;
     private final PaymentCancellationDetails cancellationDetails;
     private final PaymentAuthorizationDetails authorizationDetails;
+    private final PaymentInvoiceDetails invoiceDetails;
     private final Set<PaymentTransfer> transfers;
     private final Object deal;
     private final String merchantCustomerId;
-    private final Object invoiceDetails;
 
     public PaymentImpl(
         String id,
@@ -54,10 +54,10 @@ public class PaymentImpl implements Payment {
         JsonElement metadata,
         PaymentCancellationDetails cancellationDetails,
         PaymentAuthorizationDetails authorizationDetails,
+        PaymentInvoiceDetails invoiceDetails,
         Set<PaymentTransfer> transfers,
         Object deal,
-        String merchantCustomerId,
-        Object invoiceDetails
+        String merchantCustomerId
     ) {
         this.id = id;
         this.status = status;
@@ -77,10 +77,10 @@ public class PaymentImpl implements Payment {
         this.metadata = metadata;
         this.cancellationDetails = cancellationDetails;
         this.authorizationDetails = authorizationDetails;
+        this.invoiceDetails = invoiceDetails;
         this.transfers = transfers;
         this.deal = deal;
         this.merchantCustomerId = merchantCustomerId;
-        this.invoiceDetails = invoiceDetails;
     }
 
     @Override
@@ -174,6 +174,11 @@ public class PaymentImpl implements Payment {
     }
 
     @Override
+    public @Nullable PaymentInvoiceDetails getInvoiceDetails() {
+        return invoiceDetails;
+    }
+
+    @Override
     public @Nullable Set<PaymentTransfer> getTransfers() {
         return transfers;
     }
@@ -186,10 +191,5 @@ public class PaymentImpl implements Payment {
     @Override
     public @Nullable String getMerchantCustomerId() {
         return merchantCustomerId;
-    }
-
-    @Override
-    public @Nullable Object getInvoiceDetails() {
-        return invoiceDetails;
     }
 }
