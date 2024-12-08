@@ -12,6 +12,7 @@ import com.mefrreex.yookassa.exception.YookassaApiException;
 import com.mefrreex.yookassa.exception.YookassaClientException;
 import com.mefrreex.yookassa.utils.HttpMethod;
 import com.mefrreex.yookassa.utils.gson.GsonUtil;
+import org.jetbrains.annotations.Nullable;
 import okhttp3.*;
 
 import java.io.IOException;
@@ -48,11 +49,16 @@ public class YookassaImpl implements Yookassa {
     }
 
     @Override
+    public Payment getPayment(UUID id) {
+        return this.sendRequest(Payment.class, "https://api.yookassa.ru/v3/payments/" + id, HttpMethod.GET, null);
+    }
+
+    @Override
     public PaymentList getPayments(GetPaymentsRequest request) {
         return this.sendRequest(PaymentList.class, "https://api.yookassa.ru/v3/payments", HttpMethod.GET, GsonUtil.toJson(request));
     }
 
-    private <T> T sendRequest(Class<T> responseType, String endpoint, HttpMethod method, String body) {
+    private <T> T sendRequest(Class<T> responseType, String endpoint, HttpMethod method, @Nullable String body) {
         OkHttpClient client = new OkHttpClient();
 
         String credentials = shopIdentifier + ":" + shopToken;
