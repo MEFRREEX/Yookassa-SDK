@@ -1,11 +1,15 @@
 package com.mefrreex.yookassa.impl;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
 import com.mefrreex.yookassa.api.Yookassa;
 import com.mefrreex.yookassa.api.model.payment.CreatePaymentRequest;
 import com.mefrreex.yookassa.api.model.payment.GetPaymentsRequest;
 import com.mefrreex.yookassa.api.model.payment.Payment;
 import com.mefrreex.yookassa.api.model.payment.PaymentList;
-import com.mefrreex.yookassa.exception.YookassaRequestException;
+import com.mefrreex.yookassa.exception.YookassaApiException;
+import com.mefrreex.yookassa.exception.YookassaClientException;
 import com.mefrreex.yookassa.utils.HttpMethod;
 import com.mefrreex.yookassa.utils.gson.GsonUtil;
 import okhttp3.*;
@@ -21,6 +25,9 @@ public class YookassaImpl implements Yookassa {
     private final String shopToken;
 
     public YookassaImpl(int shopIdentifier, String shopToken) {
+        if (shopIdentifier == 0 || shopToken == null || shopToken.isBlank()) {
+            throw new YookassaClientException("No credentials are specified");
+        }
         this.shopIdentifier = shopIdentifier;
         this.shopToken = shopToken;
     }
@@ -70,17 +77,26 @@ public class YookassaImpl implements Yookassa {
         }
 
         try (Response response = client.newCall(requestBuilder.build()).execute()) {
+            String responseBody = response.body() != null ? response.body().string() : "No error response body";
+
             if (!response.isSuccessful()) {
-                String errorResponse = response.body() != null ? response.body().string() : "No error response body";
-                throw new RuntimeException(errorResponse);
+                try {
+                    JsonObject errorJson = JsonParser.parseString(responseBody).getAsJsonObject();
+                    String type = errorJson.has("type") ? errorJson.get("type").getAsString() : null;
+                    String id = errorJson.has("id") ? errorJson.get("id").getAsString() : null;
+                    String code = errorJson.has("code") ? errorJson.get("code").getAsString() : null;
+                    String description = errorJson.has("description") ? errorJson.get("description").getAsString() : null;
+                    String parameter = errorJson.has("parameter") ? errorJson.get("parameter").getAsString() : null;
+
+                    throw new YookassaApiException(type, id, code, description, parameter, endpoint);
+                } catch (JsonSyntaxException e) {
+                    throw new RuntimeException("Invalid error response format: " + responseBody, e);
+                }
             }
 
-            if (responseType == null) return null;
-
-            String responseBody = response.body() != null ? response.body().string() : "";
-            return GsonUtil.fromJson(responseBody, responseType);
+            return responseType != null ? GsonUtil.fromJson(responseBody, responseType) : null;
         } catch (IOException e) {
-            throw new YookassaRequestException("Error during HTTP request", e);
+            throw new YookassaClientException("Error during HTTP request", e);
         }
     }
 }
