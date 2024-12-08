@@ -1,4 +1,4 @@
-# Example of creating a payment
+# Example of getting payments
 
 Getting payments is done by creating a GetPaymentsRequest request. If needed, you can pass additional parameters to the request builder to filter the result. Here is an example of how it works:
 
