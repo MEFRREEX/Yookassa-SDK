@@ -1,5 +1,6 @@
 package com.mefrreex.yookassa.impl;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
@@ -18,6 +19,8 @@ import okhttp3.*;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
+import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 
 public class YookassaImpl implements Yookassa {
@@ -63,6 +66,19 @@ public class YookassaImpl implements Yookassa {
 
         String credentials = shopIdentifier + ":" + shopToken;
         String basicAuth = "Basic " + Base64.getEncoder().encodeToString(credentials.getBytes(StandardCharsets.UTF_8));
+
+        if (method == HttpMethod.GET && body != null) {
+            try {
+                JsonObject jsonObject = JsonParser.parseString(body).getAsJsonObject();
+                HttpUrl.Builder urlBuilder = Objects.requireNonNull(HttpUrl.parse(endpoint)).newBuilder();
+                for (Map.Entry<String, JsonElement> entry : jsonObject.entrySet()) {
+                    urlBuilder.addQueryParameter(entry.getKey(), entry.getValue().getAsString());
+                }
+                endpoint = urlBuilder.build().toString();
+            } catch (JsonSyntaxException e) {
+                throw new IllegalArgumentException("Invalid JSON body for GET request: " + body, e);
+            }
+        }
 
         Request.Builder requestBuilder = new Request.Builder()
                 .url(endpoint)

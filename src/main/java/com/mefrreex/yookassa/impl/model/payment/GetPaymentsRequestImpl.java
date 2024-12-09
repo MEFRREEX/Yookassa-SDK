@@ -3,8 +3,8 @@ package com.mefrreex.yookassa.impl.model.payment;
 import com.google.gson.annotations.SerializedName;
 import com.mefrreex.yookassa.api.model.payment.GetPaymentsRequest;
 import com.mefrreex.yookassa.api.model.payment.PaymentStatus;
-import lombok.Builder;
 import org.jetbrains.annotations.Nullable;
+import lombok.Builder;
 
 import java.time.Instant;
 
